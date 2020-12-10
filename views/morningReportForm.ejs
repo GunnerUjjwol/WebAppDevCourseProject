@@ -1,0 +1,30 @@
+<%- include('./partials/header.ejs') %>
+<form method="POST" name="morningReport" action="/behavior/reporting/morning">
+	<div>
+    <h2>Morning Report</h2>
+    <div class="form-group">
+	<label for="date">Date</label>
+    <input type="date" name="date" class="form-control" id="datePicker"/>
+    </div>
+    </div>
+    <script>
+    document.getElementById('datePicker').value = new Date().toISOString().substring(0, 10);
+    </script>
+    <div class="form-group">
+    <label for="sleepDuration">Sleep Duration</label>
+    <input type="number" step="0.01" placeholder="(in hours)" class="form-control" name="sleepDuration" value = "<%=sleepDuration%>"/>
+    </div>
+    <%- include('./partials/error.ejs', { errors: errors, attribute: 'sleepDuration'}) %>
+    <div class="form-group">
+    <label for="sleepQuality">Sleep Quality</label>
+    <input type="number" class="form-control" name="sleepQuality" value = "<%=sleepQuality%>"/>
+    </div class="form-group">
+    <%- include('./partials/error.ejs', { errors: errors, attribute: 'sleepQuality'}) %>
+    <div class="form-group">
+    <label for="genericMood">Generic Mood</label>
+    <input type="number" class="form-control" name="genericMood" value = "<%=genericMood%>"/>
+    </div>
+    <%- include('./partials/error.ejs', { errors: errors, attribute: 'genericMood'}) %>
+    <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+<%- include('./partials/footer.ejs') %>

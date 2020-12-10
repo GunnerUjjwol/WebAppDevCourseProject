@@ -1,0 +1,18 @@
+<%- include('./partials/header.ejs') %>
+<h2>Create account</h2>
+<form method="POST" action="/auth/register">
+	<div class="form-group">    
+	<label for="email">Email</label>
+    <input type="text" name="email" class="form-control" value="<%=email%>"/>
+    </div>
+    <%- include('./partials/error.ejs', { errors: errors, attribute: 'email'}) %>
+
+    <div class="form-group">
+    <label for="password">Password</label>
+    <input type="password" class="form-control" name="password"/>
+    </div>
+    <%- include('./partials/error.ejs', { errors: errors, attribute: 'password'}) %>
+    <input type="submit" class="btn btn-primary" value="Create a new account!" />
+    <a href="/auth/login">Already Have an account? Login</a>
+</form>
+<%- include('./partials/footer.ejs') %>

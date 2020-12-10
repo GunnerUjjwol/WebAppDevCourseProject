@@ -1,0 +1,22 @@
+<%- include('./partials/header.ejs') %>
+<div>
+    <form method="POST" action="/behavior/reportSelection">
+        <label for="reportType">Choose a Report Type:</label>
+        <select name="reportType" class="form-control" id="reportType" >
+          <option value="morningReport">Morning</option>
+          <option value="eveningReport">Evening</option>
+        </select>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <div>
+        <h5> Today's Reporting Submission </h5>
+        <ul>
+            <li>Morning Report : <%=morningReport%></li>
+            <li>Evening Report : <%=eveningReport%></li>
+        </ul>
+    </div>
+    <a href="/behavior/summary">View Summary</a>
+</div>
+<%- include('./partials/footer.ejs') %>
+
+

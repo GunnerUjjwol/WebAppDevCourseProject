@@ -1,0 +1,46 @@
+<%- include('./partials/header.ejs') %>
+<h1>Summary Report</h1>
+<h3> Weekly Average Report </h3>
+<div>
+	<form method = "POST" action = "/behavior/summary" />
+		<label for="week">Select a week:</label>
+		<input type="week" id="week" name="week" value=<%=weekNo%>>
+		<input type="submit" class="btn btn-primary" value = "Submit"/>
+	</form>
+</div>
+<div>
+	<% if (weekAvg) { %>
+			<ul>
+				<li>Average sleep duration : <%=weekAvg.sleepavg%></li>
+				<li>Average time spent on sports and exercise : <%= weekAvg.exerciseavg %></li>
+				<li>Average time spent studying : <%= weekAvg.studyavg %></li>
+				<li>Average sleep quality : <%=weekAvg.sleepqualityavg%> </li>
+				<li>Average generic mood : <%= weekAvg.moodavg %></li>
+			</ul>
+	<% } else { %>
+		<p> No Data Available </p>
+	<% } %>
+</div>
+
+<h3> Monthly Average Report </h3>
+<div>
+	<form method = "POST" action = "/behavior/summary" />
+		<label for="month">Select a month:</label>
+		<input type="month" id="month" name="month" value=<%=monthNo%>>
+		<input type="submit" class="btn btn-primary" value = "Submit"/>
+	</form>
+</div>
+<div>
+	<% if (monthAvg) { %>
+			<ul>
+				<li>Average sleep duration : <%=monthAvg.sleepavg%></li>
+				<li>Average time spent on sports and exercise : <%= monthAvg.exerciseavg %></li>
+				<li>Average time spent studying : <%= monthAvg.studyavg %></li>
+				<li>Average generic mood : <%= monthAvg.moodavg %></li>
+				<li>Average sleep quality : <%=monthAvg.sleepqualityavg%></li>
+			</ul>
+	<% } else { %>
+		<p> No Data Available </p>
+	<% } %>
+</div>
+<%- include('./partials/footer.ejs') %>

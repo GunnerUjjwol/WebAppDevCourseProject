@@ -1,0 +1,36 @@
+<%- include('./partials/header.ejs') %>
+<h1>Behavior Reporting APP</h1>
+<p>A web application for self-monitoring purposes. The application provides users an opportunity to report behavior daily.</p>
+<div>
+	<% if (authenticated) { %>
+		<a href="/behavior/reportSelection">Reporting Page</a>
+	<% } else { %>
+		<a href="/auth/login">Log In</a>
+		<a href="/auth/register">Register</a>
+	<% } %>
+	
+</div>
+<div>
+	<p>Average Mood Today : 
+	<% if (moodToday) { %>
+		<%= moodToday%>
+	<% } else { %>
+		N/A
+	<% } %>
+	</p>
+	<p>Average Mood Yesterday : 
+	<% if (moodYesterday) { %>
+		<%= moodYesterday%>
+	<% } else { %>
+		N/A
+	<% } %>
+	</p>
+	<p>Mood Comparator: 
+	<% if (moodComparision) { %>
+		<%=moodComparision%>
+	<% } else { %>
+		N/A
+	<% } %>
+	</p>
+</div>
+<%- include('./partials/footer.ejs') %>
