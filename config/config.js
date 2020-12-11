@@ -1,8 +1,8 @@
 let config = {};
+const DATABASE_URL = Deno.env.toObject().DATABASE_URL;
+console.log(DATABASE_URL);
 
 if (Deno.env.get('TEST_ENVIRONMENT')) {
-  config.database = {};
-} else {
   config.database = {
     hostname: "suleiman.db.elephantsql.com",
     database: "wrixwdpg",
@@ -10,6 +10,8 @@ if (Deno.env.get('TEST_ENVIRONMENT')) {
     password: "jHUd-ZVCzanCe0kqkgGxcrd15FMrwbAf",
     port: 5432
   };
+} else {
+  config.database = DATABASE_URL;
 }
 
 export { config }; 
