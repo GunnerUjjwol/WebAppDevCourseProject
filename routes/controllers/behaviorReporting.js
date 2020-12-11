@@ -1,6 +1,7 @@
 import { executeQuery } from "../../database/database.js";
 const landingPage = async ({session,render}) => {
 	const authenticated = await session.get('authenticated');
+	const authenticatedUser = await session.get('user')
 	const resmoodToday = await executeQuery("SELECT avg(genericMood) as moodAvgToday FROM report WHERE date= current_date");
 	const resmoodYesterday = await executeQuery("SELECT avg(genericMood) as moodAvgYesterday FROM report WHERE date= current_date -1");
 	const moodToday = resmoodToday.rowsOfObjects()[0].moodavgtoday;
@@ -13,10 +14,11 @@ const landingPage = async ({session,render}) => {
 			moodComparision = "things are looking gloomy today"
 		}
 	}
-	render('landingPage.ejs', {moodToday, moodYesterday, moodComparision, authenticated})
+	render('landingPage.ejs', {moodToday, moodYesterday, moodComparision, authenticated, authenticatedUser})
 }
 
 const reportSelection = async({render,request,session}) => {
+	const authenticatedUser = await session.get('user')
 	const body = request.body();
   	const params = await body.value;
 	const reportType = params.get('reportType');
@@ -35,9 +37,9 @@ const reportSelection = async({render,request,session}) => {
 	    errors: []
 	};
   	if(reportType === 'morningReport'){
-  		render('morningReportForm.ejs', {...morningData, authenticated: await session.get('authenticated')})
+  		render('morningReportForm.ejs', {...morningData, authenticated: await session.get('authenticated'), authenticatedUser})
   	}else if(reportType === 'eveningReport') {
-  		render('eveningReportForm.ejs', {...eveningData, authenticated: await session.get('authenticated')})
+  		render('eveningReportForm.ejs', {...eveningData, authenticated: await session.get('authenticated'), authenticatedUser})
   	}	
 }
 
@@ -46,6 +48,7 @@ const reportSelection = async({render,request,session}) => {
 	let weekNo;
 	let monthNo;
 const summaryReport = async({render, request, session}) => {
+	const authenticatedUser = await session.get('user')
 	const user = await session.get('user');
  	const user_id = user.id
 	
@@ -91,10 +94,11 @@ const summaryReport = async({render, request, session}) => {
 		
  	}
 	console.log("Month Avg :",monthAvg)
-	render('summaryReport.ejs', {weekAvg: weekAvg, monthAvg: monthAvg, weekNo: weekNo, monthNo: monthNo, authenticated: await session.get('authenticated')})
+	render('summaryReport.ejs', {weekAvg: weekAvg, monthAvg: monthAvg, weekNo: weekNo, monthNo: monthNo, authenticated: await session.get('authenticated'), authenticatedUser})
 }
 
 const reportSelectionForm = async({render,session})=> {
+	const authenticatedUser = await session.get('user')
 	const user = await session.get('user');
  	const user_id = user.id
 	const resMor = await executeQuery("SELECT * from report where user_id =$1 and reportType = 1 and date = current_date", user_id)
@@ -111,7 +115,7 @@ const reportSelectionForm = async({render,session})=> {
 	}else {
 		eveningReport = 'Done';
 	}
-	render('reportingForm.ejs', {eveningReport,morningReport, authenticated: await session.get('authenticated')})
+	render('reportingForm.ejs', {eveningReport,morningReport, authenticated: await session.get('authenticated'), authenticatedUser})
 }
 
 

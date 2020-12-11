@@ -53,7 +53,7 @@ const authenticate = async({render,request, response, session}) => {
   
   if (res.rowCount === 0) {
       response.status = 401;
-      render('login.ejs', {authenticated: false})
+      render('login.ejs', {authenticated: false, errors: ["Invalid email or password"]})
       return;
   }
 
@@ -64,7 +64,7 @@ const authenticate = async({render,request, response, session}) => {
   const passwordCorrect = await bcrypt.compare(password, hash);
   if (!passwordCorrect) {
       response.status = 401;
-      render('login.ejs', {authenticated: false})
+      render('login.ejs', {authenticated: false, errors: ["Invalid email or password"]})
   }else {
     await session.set('authenticated', true);
     await session.set('user', {
@@ -73,7 +73,7 @@ const authenticate = async({render,request, response, session}) => {
     });
     console.log(await session.get('authenticated'));
     console.log(await session.get('user'));
-    response.redirect('/behavior/reportSelection')
+    response.redirect('/behavior/reporting')
   }
 
   

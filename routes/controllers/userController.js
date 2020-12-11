@@ -3,7 +3,7 @@ const registrationForm = ({render}) => {
 }
 
 const loginForm = ({render}) => {
-	render('login.ejs', {authenticated: false})
+	render('login.ejs', {authenticated: false, errors: null})
 }
  
 export {  registrationForm, loginForm };

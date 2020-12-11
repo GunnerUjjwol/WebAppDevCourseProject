@@ -17,7 +17,8 @@ const eveningValidationRules = {
 };
 
 const eveningReportSubmission = async({request, response, session, render}) => {
-	eveningData.errors = null;
+	const authenticatedUser = await session.get('user')
+    eveningData.errors = null;
 	const body = request.body();
   	const document = await body.value;
     const date = document.get('date');
@@ -40,14 +41,14 @@ const eveningReportSubmission = async({request, response, session, render}) => {
 	  	if (existingReport.rowCount > 0) {
 		    await executeQuery("UPDATE report SET studyDuration =$1, exerciseDuration= $2, regularity = $3, genericMood = $4 WHERE user_id = $5 and date = $6 and reportType =2",  studyDuration, exerciseDuration, regularity, genericMood, user_id, date);
 		    response.status = 200;
-		    response.redirect('/behavior/reportSelection')
+		    response.redirect('/behavior/reporting')
 	  	}else {
 	  		await executeQuery("INSERT INTO report (date, studyDuration, exerciseDuration, regularity, genericMood, user_id, reportType) VALUES ($1, $2, $3, $4, $5, $6, 2);", date, studyDuration, exerciseDuration, regularity, genericMood, user_id);
 	    	response.status = 200;
-	    	response.redirect('/behavior/reportSelection')
+	    	response.redirect('/behavior/reporting')
 	  	}
     } else {
-	  	render('eveningReportForm.ejs', {...eveningData,authenticated: await session.get('authenticated')})
+	  	render('eveningReportForm.ejs', {...eveningData,authenticated: await session.get('authenticated'), authenticatedUser})
 	 }
     
     
@@ -67,6 +68,7 @@ const morningValidationRules = {
 };
 
 const morningReportSubmission = async({request, response, session, render}) => {
+    const authenticatedUser = await session.get('user')
 	morningData.errors = null;
     const body = request.body();
     const document = await body.value;
@@ -88,14 +90,14 @@ const morningReportSubmission = async({request, response, session, render}) => {
 	  	if (existingReport.rowCount > 0) {
 		    await executeQuery("UPDATE report SET sleepDuration =$1, sleepQuality= $2, genericMood = $3 WHERE user_id = $4 and date = $5 and reportType = 1",  sleepDuration, sleepQuality, genericMood, user_id, date);
 		    response.status = 200;
-		    response.redirect('/behavior/reportSelection')
+		    response.redirect('/behavior/reporting')
 	  	}else {
 		  	await executeQuery("INSERT INTO report (date, sleepDuration, sleepQuality, genericMood, user_id, reportType) VALUES ($1, $2, $3, $4, $5, 1);", date, sleepDuration, sleepQuality, genericMood, user_id);
 		    response.status = 200;
-		    response.redirect('/behavior/reportSelection')
+		    response.redirect('/behavior/reporting')
 	  	}
 	  } else {
-	  	render('morningReportForm.ejs', {...morningData, authenticated: await session.get('authenticated')})
+	  	render('morningReportForm.ejs', {...morningData, authenticated: await session.get('authenticated'), authenticatedUser})
 	  }
         
 };

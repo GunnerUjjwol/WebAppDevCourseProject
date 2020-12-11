@@ -10,5 +10,5 @@
     <div class="container">
     	<h1><strong>Behavior Reporting App</strong></h1>
     	<% if (authenticated) { %>
-    	<a href="/auth/logout">Log out</a>
+    	Logged In as <%=authenticatedUser.email%> <a href="/auth/logout">Log out</a>
     	<% } %>
