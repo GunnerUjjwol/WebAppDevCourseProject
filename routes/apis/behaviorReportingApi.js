@@ -102,8 +102,7 @@ const morningReportSubmission = async({request, response, session, render}) => {
 
 const summaryOfLastWeek = async({response}) => {
 	const avgRes = await executeQuery("SELECT avg(sleepDuration) as sleepAvg, avg(sleepQuality) as sleepQualityAvg,avg(studyDuration) as studyAvg, avg(exerciseDuration) as exerciseAvg, avg(genericMood) as moodAvg FROM report WHERE date > current_date - 7 ")
-	//response.body = avgRes.rowsOfObjects()[0];
-    response.status= 200
+	response.body = avgRes.rowsOfObjects()[0];
 }
 
 const summaryOfGivenDate = async({response, params}) => {
