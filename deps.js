@@ -7,3 +7,4 @@ export { Pool } from "https://deno.land/x/postgres@v0.4.5/mod.ts";
 export { validate, required, isNumeric,lengthBetween, isEmail, minNumber, maxNumber,numberBetween } from "https://deno.land/x/validasaur@v0.15.0/mod.ts";
 export { assertEquals } from "https://deno.land/std@0.78.0/testing/asserts.ts";
 export { superoak } from "https://deno.land/x/superoak@2.3.1/mod.ts";
+export { parse } from "https://deno.land/std/flags/mod.ts"

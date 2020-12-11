@@ -29,10 +29,19 @@ CREATE TABLE report (
   user_id INTEGER REFERENCES users(id)
 );
 
--------------------------
 
-The deployed version of the application can be found at: 
-----
+-----------------------
+COMMAND TO RUN THE DENO APP
+-----------------
+deno run --unstable --allow-all app.js -d ${DATABASE_URL} -p ${PORT}
+
+where DATABASE_URL must be replaced with the database
+similarly, PORT can be specified by adding args "-p ${PORT}". These segment can be excluded and the port will default to 7777
+
+
+-------------------------
+THE DEPLOYED VERSION OF THE APP CAN BE FOUND AT
+----------------------
 https://web-app-dev-course-project.herokuapp.com/
 ---
 ------------------------

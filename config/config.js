@@ -1,17 +1,18 @@
-let config = {};
-const DATABASE_URL = Deno.env.toObject().DATABASE_URL;
-console.log(DATABASE_URL);
+import { parse } from "../deps.js";
 
-if (Deno.env.get('TEST_ENVIRONMENT')) {
-  config.database = {
-    hostname: "suleiman.db.elephantsql.com",
-    database: "wrixwdpg",
-    user: "wrixwdpg",
-    password: "jHUd-ZVCzanCe0kqkgGxcrd15FMrwbAf",
-    port: 5432
-  };
+let config = {};
+let DATABASE_URL;
+
+
+const args = parse(Deno.args);
+if (args['d']) {
+  DATABASE_URL = args['d'];
+
 } else {
-  config.database = DATABASE_URL;
+  DATABASE_URL = Deno.env.toObject().DATABASE_URL;
 }
+console.log(DATABASE_URL);
+config.database = DATABASE_URL;
+
 
 export { config }; 

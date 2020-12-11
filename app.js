@@ -1,16 +1,17 @@
 import { Application, Session } from "./deps.js";
 import { router } from "./routes/routes.js";
 import * as middleware from './middlewares/middlewares.js';
-import { viewEngine, engineFactory, adapterFactory } from "./deps.js";
+import { parse, viewEngine, engineFactory, adapterFactory } from "./deps.js";
 
 
 const app = new Application();
-
+const args = parse(Deno.args);
+console.log(args)
 let port = 7777;
-if (Deno.args.length > 0) {
-  const lastArgument = Deno.args[Deno.args.length - 1];
-  port = Number(lastArgument);
+if (args['p']) {
+  port = args['p'];
 }
+
 
 const session = new Session({ framework: "oak" });
 await session.init();
@@ -32,12 +33,9 @@ app.use(middleware.errorMiddleware);
 app.use(router.routes());
 
 
-if (!Deno.env.get('TEST_ENVIRONMENT')) {
-    app.listen({ port });
-  }else {
-  	console.log('App is listening on port : ', port)
-  	app.listen({port :7777})
-  }
+console.log('App is listening on port : ', port)
+app.listen({ port: port });
+
   
   
   export {app};
