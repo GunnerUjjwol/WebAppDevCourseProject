@@ -40,7 +40,7 @@ const register = async({render, request, response}) => {
 
 }
 
-const authenticate = async({request, response, session}) => {
+const authenticate = async({render,request, response, session}) => {
 
   const body = request.body();
   const params = await body.value;
@@ -53,6 +53,7 @@ const authenticate = async({request, response, session}) => {
   
   if (res.rowCount === 0) {
       response.status = 401;
+      render('login.ejs', {authenticated: false})
       return;
   }
 
@@ -63,17 +64,19 @@ const authenticate = async({request, response, session}) => {
   const passwordCorrect = await bcrypt.compare(password, hash);
   if (!passwordCorrect) {
       response.status = 401;
-      return;
+      render('login.ejs', {authenticated: false})
+  }else {
+    await session.set('authenticated', true);
+    await session.set('user', {
+        id: userObj.id,
+        email: userObj.email
+    });
+    console.log(await session.get('authenticated'));
+    console.log(await session.get('user'));
+    response.redirect('/behavior/reportSelection')
   }
 
-  await session.set('authenticated', true);
-  await session.set('user', {
-      id: userObj.id,
-      email: userObj.email
-  });
-  console.log(await session.get('authenticated'));
-  console.log(await session.get('user'));
-  response.redirect('/behavior/reportSelection')
+  
 }
 
 const logout = async({session, response}) => {

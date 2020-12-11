@@ -31,10 +31,13 @@ app.use(middleware.errorMiddleware);
 
 app.use(router.routes());
 
+
 if (!Deno.env.get('TEST_ENVIRONMENT')) {
     app.listen({ port: 7777 });
-  } else {
-  	app.listen({port: port})
+  }else {
+  	console.log('App is listening on port : ', port)
+  	app.listen({port})
   }
+  
   
   export {app};

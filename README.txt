@@ -1,3 +1,5 @@
+----------------------------
+DATABASE INITIALIZATION QUERIES
 -----
 ##USERS TABLE
 -----
@@ -26,3 +28,7 @@ CREATE TABLE report (
   regularity INTEGER,
   user_id INTEGER REFERENCES users(id)
 );
+
+-------------------------
+
+------------------------

@@ -67,16 +67,4 @@ Deno.test({
 
 
 
-// Deno.test({
-//     name: "POST request to /auth/register should register the user", 
-//     async fn() {
-//         const testClient = await superoak(app);
-//         await testClient.post("/auth/register").send("email=a@a.com&password=12345")
-//         expect(200)
-//     },
-//     sanitizeResources: false,
-//     sanitizeOps: false
-// });
-
-
 
