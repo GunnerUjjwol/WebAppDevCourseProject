@@ -31,4 +31,8 @@ CREATE TABLE report (
 
 -------------------------
 
+The deployed version of the application can be found at: 
+----
+https://web-app-dev-course-project.herokuapp.com/
+---
 ------------------------
